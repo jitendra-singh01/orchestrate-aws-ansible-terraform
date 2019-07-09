@@ -1,0 +1,15 @@
+server {
+    listen 80;
+
+    root /var/www/html/app1;
+    index index.html index.htm;
+
+    access_log /var/log/nginx/app1.log;
+    error_log /var/log/nginx/app1-error.log error;
+
+    server_name {{ domain }};
+
+    charset utf-8;
+#    location /favicon.ico { log_not_found off; access_log off;}
+#    location /robots.txt  { log_not_found off; access_log off;}
+}

@@ -1,0 +1,41 @@
+---
+- name: Create Developer1 group  
+  group: name=www-dev1 gid=55555 state=present
+
+- name: Create Developer2 group  
+  group: name=www-dev2 gid=1123 state=present
+
+- name: Create dev1 User
+  user: name=dev1 password="{{ dev1_passwd }}" groups=www-dev1 createhome=yes shell=/bin/bash
+
+- name: Add dev1 Authorized Key
+  authorized_key: user=dev1 key="{{ authorized_key1 }}" state=present
+
+#- name: add admin into sudos
+#  lineinfile: path=/etc/sudoers  line='admin1	ALL=(ALL)	ALL'
+
+- name: Create dev2 User
+  user: name=dev2 password="{{ dev2_passwd }}" groups=www-dev1 createhome=yes shell=/bin/bash
+
+- name: Add dev2 Authorized Key
+  authorized_key: user=dev2 key="{{ authorized_key2 }}" state=present
+
+
+- name: Create dev3 User
+  user: name=dev3 password="{{ dev3_passwd }}" groups=www-dev2 createhome=yes shell=/bin/bash
+
+- name: Add Deploy Authorized Key
+  authorized_key: user=dev3 key="{{ authorized_key3 }}" state=present
+
+- name: Create dev4 User
+  user: name=dev4 password="{{ dev4_passwd }}" groups=www-dev2 createhome=yes shell=/bin/bash
+
+- name: Add Deploy Authorized Key
+  authorized_key: user=dev4 key="{{ authorized_key4 }}" state=present
+
+
+- name: Create dev5 User
+  user: name=dev5 password="{{ dev5_passwd }}" groups=www-dev2 createhome=yes shell=/bin/bash
+
+- name: Add Deploy Authorized Key
+  authorized_key: user=dev5 key="{{ authorized_key5 }}" state=present

@@ -1,0 +1,12 @@
+---
+- hosts: aws
+  remote_user: ec2-user
+  become: yes
+  become_method: sudo
+  vars:
+    app_code_user: "ec2-user" # remote user
+    ansible_sudo_pass: redhat
+  roles:
+    - developers
+    - nginx
+   

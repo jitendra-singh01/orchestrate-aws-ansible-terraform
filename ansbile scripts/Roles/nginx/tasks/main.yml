@@ -1,0 +1,35 @@
+---
+- name: Add epel release
+  yum : name=epel-release state=present
+
+- name: Install Nginx
+  yum: name=nginx state=latest update_cache=true
+  notify:
+   - Start Nginx
+
+- name: Creating html directory for domain 
+  file: path=/var/www/html  state=directory  mode=0755  owner=ec2-user  group=ec2-user
+
+- name: Creating webapp1 directory for domain 
+  file: path=/var/www/html/app1  state=directory  mode=0755  owner=ec2-user  group=www-dev1
+
+- name: Creating webapp1 directory for domain 
+  file: path=/var/www/html/app2  state=directory  mode=0755  owner=ec2-user  group=www-dev2
+
+- name: copying index file of domain
+  copy: src=/tmp/index.html dest=/var/www/html/app1
+
+- name: copying index file of domain
+  copy: src=/tmp/index.html dest=/var/www/html/app2
+
+#- name: Disable Default Config
+#  file: dest=/etc/nginx/nginx.conf state=absent
+#  notify:
+#    - Reload Nginx
+
+- name: Add SFH Site Config
+  template: src=mydomain.com.j2 dest=/etc/nginx/conf.d/virtual.conf owner=ec2-user group=ec2-user
+  notify:
+    - Reload Nginx
+#- name: Enable SFH Site Config
+#  file: src=/etc/nginx/site-available/{{ domain }}.conf dest=/etc/nginx/sites-enabled/{{ domain }}.conf state=link force=yes
